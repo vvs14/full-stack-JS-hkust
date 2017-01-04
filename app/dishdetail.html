@@ -46,7 +46,7 @@
             </div>
             <div class="col-xs-9 col-xs-offset-1">
                 <!--http://stackoverflow.com/questions/37100705/order-by-elements-based-on-input-text-angularjs-->
-                <h4 display="inline-block"> Customer Comments</h4><span> Sort by</span> <input type="text" ng-model="dshDtlCtrl.sort">
+                <h4 style="display:inline"> Customer Comments</h4><span> Sort by</span> <input type="text" ng-model="dshDtlCtrl.sort">
                 <ul style="list-style:none;">
                     <li ng-repeat="cmnt in dshDtlCtrl.dish.comments | orderBy:dshDtlCtrl.sort">
                         <blockquote>
