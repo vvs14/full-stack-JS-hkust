@@ -1,3 +1,4 @@
+'use strict';
 var app = angular.module('confusionApp', []);
 app.controller('menuController', function() {
     this.tab = 1;
@@ -43,16 +44,20 @@ app.controller('menuController', function() {
 
     this.select = function(setTab) {
         this.tab = setTab;
-        if (setTab == 2)
+        if (setTab === 2){
             this.filtText = 'appetizer';
-        else if (setTab == 3)
+        }    
+        else if (setTab === 3){
             this.filtText = 'mains';
-        else if (setTab == 4)
+        }  
+        else if (setTab === 4){
             this.filtText = 'dessert';
-        else
-            this.filtText = '';
-    }
+        }   
+        else{
+           this.filtText = ''; 
+        }    
+    };
     this.isSelected = function(checkTab) {
-        return (this.tab == checkTab);
-    }
-})
+        return (this.tab === checkTab);
+    };
+});
