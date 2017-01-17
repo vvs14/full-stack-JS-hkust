@@ -1,5 +1,6 @@
 'use strict';
 var app = angular.module('confusionApp', [])
+    //MenuController
     .controller('MenuController', ['$scope', function($scope) {
         $scope.tab = 1;
         var dishes = [{
@@ -64,4 +65,14 @@ var app = angular.module('confusionApp', [])
             $scope.showDetails = !$scope.showDetails;
         }
 
-    }]);
+    }])
+    //Contact Controller
+    .controller('ContactController',['$scope', function($scope){
+        $scope.feedback = { mychannel: "", firstName: "", lastname: "",
+                          agree: "", email: ""};
+    }] )
+    //Feedback Controller
+    .controller('FeedbackController',['$scope', function($scope){
+        
+    }])
+;
