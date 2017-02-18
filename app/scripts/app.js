@@ -60,19 +60,23 @@ var app = angular.module('confusionApp', [])
         $scope.isSelected = function(checkTab) {
             return ($scope.tab === checkTab);
         };
-        
-        $scope.toggleDetails = function(){
+
+        $scope.toggleDetails = function() {
             $scope.showDetails = !$scope.showDetails;
         }
 
     }])
     //Contact Controller
-    .controller('ContactController',['$scope', function($scope){
-        $scope.feedback = { mychannel: "", firstName: "", lastname: "",
-                          agree: "", email: ""};
-    }] )
-    //Feedback Controller
-    .controller('FeedbackController',['$scope', function($scope){
-        
+    .controller('ContactController', ['$scope', function($scope) {
+        $scope.feedback = {
+            mychannel: "",
+            firstName: "",
+            lastname: "",
+            agree: false,
+            email: ""
+        };
     }])
-;
+    //Feedback Controller
+    .controller('FeedbackController', ['$scope', function($scope) {
+
+    }]);
