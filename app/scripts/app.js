@@ -68,15 +68,25 @@ var app = angular.module('confusionApp', [])
     }])
     //Contact Controller
     .controller('ContactController', ['$scope', function($scope) {
-        $scope.feedback = {
-            mychannel: "",
-            firstName: "",
-            lastname: "",
-            agree: false,
-            email: ""
-        };
+        $scope.feedback = {mychannel: "", firstName: "", lastName: "", agree: false, email: ""};
+        var channels = [{value: "tel", label: "Tel."}, {value: "Email", label: "Email"}];
+        $scope.channels = channels;
+        $scope.invalidChannelSelection = false;
     }])
     //Feedback Controller
     .controller('FeedbackController', ['$scope', function($scope) {
-
+        $scope.sendFeedback = function(){
+            console.log($scope.feedback);   //feedback var is in ContactController but as FeedbackController is inside ContacController. it inherits all variable. So feedback is available in FeedbackController
+            if( $scope.feedback.agree && $scope.feedback.mychannel==""){
+                $scope.invalidChannelSelection = true;
+                console.log("Incorrect Channel Selection");
+            } else {
+                //Reset all values
+                $scope.invalidChannelSelection = false;
+                $scope.feedback = {mychannel: "", firstName: "", lastName: "", agree: false, email: ""};
+                $scope.mychannel="";
+                $scope.feedbackForm.$setPristine();
+                console.log($scope.feedback);
+            }   
+        }
     }]);
