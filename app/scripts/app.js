@@ -68,7 +68,7 @@ var app = angular.module('confusionApp', [])
     }])
     //Contact Controller
     .controller('ContactController', ['$scope', function($scope) {
-        $scope.feedback = {mychannel: "", firstName: "", lastName: "", agree: false, email: ""};
+        $scope.feedback = {mychannel: "", firstname: "", lastname: "", agree: false, email: ""};
         var channels = [{value: "tel", label: "Tel."}, {value: "Email", label: "Email"}];
         $scope.channels = channels;
         $scope.invalidChannelSelection = false;
@@ -83,7 +83,7 @@ var app = angular.module('confusionApp', [])
             } else {
                 //Reset all values
                 $scope.invalidChannelSelection = false;
-                $scope.feedback = {mychannel: "", firstName: "", lastName: "", agree: false, email: ""};
+                $scope.feedback = {mychannel: "", firstname: "", lastname: "", agree: false, email: ""};
                 $scope.mychannel="";
                 $scope.feedbackForm.$setPristine();
                 console.log($scope.feedback);
