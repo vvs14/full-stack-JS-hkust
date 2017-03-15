@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('conryfusionApp')
+angular.module('confusionApp')
     .factory('menuFactory', function() {
         var dishes = [{
                 name: 'Uthapizza',
