@@ -44,3 +44,6 @@ npm install gulp-ng-annotate --save-dev
 
 8) Install ngRoute in project
 bower install angular-route -S
+
+9) Install angular-ui-router in project
+bower install angular-ui-router -S
