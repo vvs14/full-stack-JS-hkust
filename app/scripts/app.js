@@ -42,16 +42,20 @@ angular.module('confusionApp', ['ui.router'])
             .state('app.menu', {
                 url: 'menu',
                 views: {
-                    templateUrl: 'views/menu.html',
-                    controller: 'MenuController'
+                    'content@':{
+                        templateUrl: 'views/menu.html',
+                        controller: 'MenuController'
+                    }
                 }
             })
             //For dishdetail page
             .state('app.dishdetails', {
                 url: 'menu/:id',
                 views: {
-                    templateUrl: 'views/dishdetail.html',
-                    controller: 'DishDetailController'
+                    'content@': {
+                        templateUrl: 'views/dishdetail.html',
+                        controller: 'DishDetailController'
+                    }   
                 }
             });
         $urlRouterProvider.otherwise('/');
