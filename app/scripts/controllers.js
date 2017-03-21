@@ -126,6 +126,11 @@ angular.module('confusionApp')
         var specialist = corporateFactory.getLeader(3);
         $scope.specialist = specialist;
     }])
+    
+    .controller('AboutController', ['$scope', 'corporateFactory', function($scope, corporateFactory){
+        //To make it accessible in aboutus.html
+        $scope.leaders = corporateFactory.leadership;
+    }])
 
 
 
