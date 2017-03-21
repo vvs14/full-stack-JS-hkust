@@ -41,3 +41,9 @@ sudo npm install gulp --save-dev
 7) Installing the various tasks related to Gulp
 sudo npm install jshint gulp-jshint jshint-stylish gulp-imagemin gulp-concat gulp-uglify gulp-minify-css gulp-usemin gulp-cache gulp-changed gulp-rev gulp-rename gulp-notify  browser-sync del --save-dev
 npm install gulp-ng-annotate --save-dev
+
+8) Install ngRoute in project
+bower install angular-route -S
+
+9) Install angular-ui-router in project
+bower install angular-ui-router -S
