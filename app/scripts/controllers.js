@@ -129,7 +129,7 @@ angular.module('confusionApp')
     
     .controller('AboutController', ['$scope', 'corporateFactory', function($scope, corporateFactory){
         //To make it accessible in aboutus.html
-        $scope.leaders = corporateFactory.leadership;
+        $scope.leaders = corporateFactory.getLeaders();
     }])
 
 
