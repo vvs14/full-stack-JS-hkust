@@ -47,3 +47,11 @@ bower install angular-route -S
 
 9) Install angular-ui-router in project
 bower install angular-ui-router -S
+
+10) Setting up server using json-server
+https://www.coursera.org/learn/angular-js/supplement/ttSa6/exercise-instructions-setting-up-a-server-using-json-server
+-Installing json-server
+sudo npm install json-server -g
+-Configuring Server folder
+At any convenient location on your computer, create a new folder named json-server, and move to this folder.
+Download the db.json file provided above to this folder.
