@@ -3,17 +3,19 @@
 angular.module('confusionApp')
 
     .controller('MenuController', ['$scope', 'menuFactory', function($scope, menuFactory) {
-
         $scope.tab = 1;
         $scope.filtText = '';
         $scope.showDetails = false;
-
-        $scope.dishes = menuFactory.getDishes();
-
-
+        $scope.dishes = {};
+        menuFactory.getDishes()
+            .then(
+                //success part
+                function(response) {
+                    $scope.dishes = response.data;
+                }
+            );
         $scope.select = function(setTab) {
             $scope.tab = setTab;
-
             if (setTab === 2) {
                 $scope.filtText = "appetizer";
             } else if (setTab === 3) {
@@ -83,10 +85,12 @@ angular.module('confusionApp')
     }])
 
     .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
-
-        var dish = menuFactory.getDish(parseInt($stateParams.id, 10));
-
-        $scope.dish = dish;
+        var dish = {};
+        menuFactory.getDish(parseInt($stateParams.id, 10))
+            .then(function(response) {
+                $scope.dish = response.data;
+                $scope.showDish = true;
+            });
 
     }])
 
@@ -118,20 +122,23 @@ angular.module('confusionApp')
     }])
 
     // implement the IndexController and About Controller here
-    .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory){
-        var creation = menuFactory.getDish(0);
+    .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory) {
+        var creation = {};
+        menuFactory.getDish(0)
+        .then(function(response){
+            $scope.creation = response.data;
+            $scope.showDish = true;
+        });
         $scope.creation = creation;
         var monthsPromotion = menuFactory.getPromotion(0);
         $scope.monthsPromotion = monthsPromotion;
         var specialist = corporateFactory.getLeader(3);
         $scope.specialist = specialist;
     }])
-    
-    .controller('AboutController', ['$scope', 'corporateFactory', function($scope, corporateFactory){
+
+    .controller('AboutController', ['$scope', 'corporateFactory', function($scope, corporateFactory) {
         //To make it accessible in aboutus.html
         $scope.leaders = corporateFactory.getLeaders();
     }])
-
-
 
 ;
