@@ -2,7 +2,7 @@
 
 angular.module('confusionApp')
     .constant("baseUrl", "http://localhost:3000/")
-    .service('menuFactory', ['$http', 'baseUrl', function($http, baseUrl) {
+    .service('menuFactory', ['$resource', 'baseUrl', function($resource, baseUrl) {
         var promotions = [{
             _id: 0,
             name: 'Weekend Grand Buffet',
@@ -11,13 +11,10 @@ angular.module('confusionApp')
             price: '19.99',
             description: 'Featuring mouthwatering combinations with a choice of five different salads, six enticing appetizers, six main entrees and five choicest desserts. Free flowing bubbly and soft drinks. All for just $19.99 per person ',
         }];
-
+        
+        //https://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/
         this.getDishes = function() {
-            return $http.get(baseUrl + "dishes");
-        };
-
-        this.getDish = function(index) {
-            return $http.get(baseUrl + "dishes/" + index);
+            return $resource(baseUrl + "dishes/:id", null, {'update': { method: 'PUT'}});
         };
 
         this.getPromotion = function(index) {
