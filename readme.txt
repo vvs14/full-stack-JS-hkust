@@ -55,3 +55,6 @@ sudo npm install json-server -g
 -Configuring Server folder
 At any convenient location on your computer, create a new folder named json-server, and move to this folder.
 Download the db.json file provided above to this folder.
+
+11) Installing ngResource module inside project
+bower install angular-resource -S
