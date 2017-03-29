@@ -103,8 +103,8 @@ angular.module('confusionApp')
         );
     }])
 
-    .controller('DishCommentController', ['$scope', function($scope) {
-
+    .controller('DishCommentController', ['$scope', 'menuFactory', function($scope, menuFactory) {
+        
         $scope.dishComment = {
             rating: 5,
             comment: "",
@@ -113,14 +113,12 @@ angular.module('confusionApp')
         };
 
         $scope.submitComment = function() {
-
             $scope.dishComment.date = new Date().toISOString();
             console.log($scope.dishComment);
-
-            $scope.dish.comments.push($scope.dishComment);
-
+            //$scope.dish is defined in DishDetailController. Ad DishCommentController is nested inside DishDetailController, it will access to $scope.dish.
+            $scope.dish.comments.push ($scope.dishComment);
+            menuFactory.getDishes.update ({id:$scope.dish.id},$scope.dish);
             $scope.commentForm.$setPristine();
-
             $scope.dishComment = {
                 rating: 5,
                 comment: "",

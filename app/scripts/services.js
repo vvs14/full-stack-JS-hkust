@@ -23,8 +23,6 @@ angular.module('confusionApp')
         }
         // implement a function named getPromotion
         // that returns a selected promotion.
-
-
     }])
 
     .factory('corporateFactory', function() {
