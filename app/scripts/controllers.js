@@ -104,20 +104,21 @@ angular.module('confusionApp')
     }])
 
     .controller('DishCommentController', ['$scope', 'menuFactory', function($scope, menuFactory) {
-        
         $scope.dishComment = {
             rating: 5,
             comment: "",
             author: "",
             date: ""
         };
-
+        //Setting radio button checked with AngularJS. 
+        //http://stackoverflow.com/questions/5592345/how-to-select-a-radio-button-by-default/33896622#33896622
+        $scope.dishComment.rating="5";
         $scope.submitComment = function() {
             $scope.dishComment.date = new Date().toISOString();
             console.log($scope.dishComment);
             //$scope.dish is defined in DishDetailController. Ad DishCommentController is nested inside DishDetailController, it will access to $scope.dish.
             $scope.dish.comments.push ($scope.dishComment);
-            menuFactory.getDishes.update ({id:$scope.dish.id},$scope.dish);
+            menuFactory.getDishes().update ({id:$scope.dish.id},$scope.dish);
             $scope.commentForm.$setPristine();
             $scope.dishComment = {
                 rating: 5,
