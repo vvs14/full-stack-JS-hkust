@@ -13,6 +13,7 @@ angular.module('confusionApp')
         }];
         
         //https://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/
+        //PUT method is given to support PUT method in case we need to push some dish to server
         this.getDishes = function() {
             return $resource(baseUrl + "dishes/:id", null, {'update': { method: 'PUT'}});
         };
