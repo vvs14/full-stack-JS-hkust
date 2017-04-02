@@ -62,3 +62,4 @@ bower install angular-resource -S
 12) Setting up environment for Unit Testing
 sudo npm install karma-cli -g
 sudo npm install jasmine-core karma-jasmine  phantomjs karma-phantomjs-launcher karma-chrome-launcher --save-dev
+bower install angular-mocks -S
