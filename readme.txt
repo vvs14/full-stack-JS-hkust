@@ -63,3 +63,7 @@ bower install angular-resource -S
 sudo npm install karma-cli -g
 sudo npm install jasmine-core karma-jasmine  phantomjs karma-phantomjs-launcher karma-chrome-launcher --save-dev
 bower install angular-mocks -S
+
+13) Setting up End 2 End test Environment
+sudo npm install protractor -g
+sudo webdriver-manager update

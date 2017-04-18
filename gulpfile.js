@@ -67,6 +67,7 @@ gulp.task('browser-sync',['default'], function(){
         'dist/**/*'
     ];
     browserSync.init(files, {
+        open:false,
         server: {
             baseDir: "dist",
             index: "index.html"
