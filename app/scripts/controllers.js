@@ -3,17 +3,22 @@
 angular.module('confusionApp')
 
     .controller('MenuController', ['$scope', 'menuFactory', function($scope, menuFactory) {
-
         $scope.tab = 1;
         $scope.filtText = '';
         $scope.showDetails = false;
-
-        $scope.dishes = menuFactory.getDishes();
-
-
+        $scope.showMenu = false;
+        $scope.message = "Loading...";
+        $scope.dishes = menuFactory.getDishes().query(
+            function(response) {
+                $scope.dishes = response; //with $http, it would have been response.data
+                $scope.showMenu = true;
+            },
+            function(response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            }
+        );
         $scope.select = function(setTab) {
             $scope.tab = setTab;
-
             if (setTab === 2) {
                 $scope.filtText = "appetizer";
             } else if (setTab === 3) {
@@ -83,32 +88,39 @@ angular.module('confusionApp')
     }])
 
     .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
-
-        var dish = menuFactory.getDish(parseInt($stateParams.id, 10));
-
-        $scope.dish = dish;
-
+        $scope.showDish = false;
+        $scope.message = "Loading...";
+        $scope.dish = menuFactory.getDishes().get({
+            id: parseInt($stateParams.id, 10)
+        }).$promise.then(
+            function(response) {
+                $scope.dish = response;
+                $scope.showDish = true;
+            },
+            function(response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            }
+        );
     }])
 
-    .controller('DishCommentController', ['$scope', function($scope) {
-
-        $scope.mycomment = {
+    .controller('DishCommentController', ['$scope', 'menuFactory', function($scope, menuFactory) {
+        $scope.dishComment = {
             rating: 5,
             comment: "",
             author: "",
             date: ""
         };
-
+        //Setting radio button checked with AngularJS. 
+        //http://stackoverflow.com/questions/5592345/how-to-select-a-radio-button-by-default/33896622#33896622
+        $scope.dishComment.rating="5";
         $scope.submitComment = function() {
-
-            $scope.mycomment.date = new Date().toISOString();
-            console.log($scope.mycomment);
-
-            $scope.dish.comments.push($scope.mycomment);
-
+            $scope.dishComment.date = new Date().toISOString();
+            console.log($scope.dishComment);
+            //$scope.dish is defined in DishDetailController. Ad DishCommentController is nested inside DishDetailController, it will access to $scope.dish.
+            $scope.dish.comments.push ($scope.dishComment);
+            menuFactory.getDishes().update ({id:$scope.dish.id},$scope.dish);
             $scope.commentForm.$setPristine();
-
-            $scope.mycomment = {
+            $scope.dishComment = {
                 rating: 5,
                 comment: "",
                 author: "",
@@ -118,20 +130,29 @@ angular.module('confusionApp')
     }])
 
     // implement the IndexController and About Controller here
-    .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory){
-        var creation = menuFactory.getDish(0);
-        $scope.creation = creation;
+    .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory) {
+        $scope.showDish = false;
+        $scope.message = "Loading...";
+        $scope.creation = menuFactory.getDishes().get({
+            id: 0
+        }).$promise.then(
+            function(response) {
+                $scope.creation = response;
+                $scope.showDish = true;
+            },
+            function(response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            }
+        );
         var monthsPromotion = menuFactory.getPromotion(0);
         $scope.monthsPromotion = monthsPromotion;
         var specialist = corporateFactory.getLeader(3);
         $scope.specialist = specialist;
     }])
-    
-    .controller('AboutController', ['$scope', 'corporateFactory', function($scope, corporateFactory){
+
+    .controller('AboutController', ['$scope', 'corporateFactory', function($scope, corporateFactory) {
         //To make it accessible in aboutus.html
         $scope.leaders = corporateFactory.getLeaders();
     }])
-
-
 
 ;
