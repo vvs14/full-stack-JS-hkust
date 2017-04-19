@@ -4,11 +4,12 @@ exports.config = {
         'e2e/*.js'
     ],
     capabilities: {
-        'browserName': 'chrome'
+        'browserName': 'firefox'
     },
     baseUrl: 'http://localhost:3001/',
     framework: 'jasmine',
     directConnect: true,
+    
     jasmineNodeOpts: {
         defaultTimeoutInterval: 30000
     }
