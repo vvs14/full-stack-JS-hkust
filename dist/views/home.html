@@ -31,16 +31,21 @@
       <h3 align=center>This Month's Promotions</h3>
     </div>
     <div class="col-xs-12 col-sm-9">
-      <!--<h4>Implement the Promotion Here</h4>-->
-      <div class="media-body">
-        <h2 class="media-heading">{{monthsPromotion.name}}
-          <span class="label label-danger">{{monthsPromotion.label}}</span>
-          <span class="badge">{{monthsPromotion.price | currency}}</span>
-        </h2>
-        <p>{{monthsPromotion.description}}</p>
+      <div ng-if="!showPromotion">
+        {{message}}
       </div>
-      <div class="media-right media-middle">
-        <img class="media-object img-thumbnail" ng-src={{monthsPromotion.image}} alt={{monthsPromotion.name}}>
+      <!--<h4>Implement the Promotion Here</h4>-->
+      <div class="media" ng-if="showPromotion">
+        <div class="media-body">
+          <h2 class="media-heading">{{monthsPromotion.name}}
+            <span class="label label-danger">{{monthsPromotion.label}}</span>
+            <span class="badge">{{monthsPromotion.price | currency}}</span>
+          </h2>
+          <p>{{monthsPromotion.description}}</p>
+        </div>
+        <div class="media-right media-middle">
+          <img class="media-object img-thumbnail" ng-src={{monthsPromotion.image}} alt={{monthsPromotion.name}}>
+        </div>
       </div>
     </div>
   </div>

@@ -8,6 +8,7 @@ angular.module('confusionApp')
         $scope.showDetails = false;
         $scope.showMenu = false;
         $scope.message = "Loading...";
+        //https://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/
         $scope.dishes = menuFactory.getDishes().query(
             function(response) {
                 $scope.dishes = response; //with $http, it would have been response.data
@@ -90,6 +91,7 @@ angular.module('confusionApp')
     .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
         $scope.showDish = false;
         $scope.message = "Loading...";
+        //https://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/
         $scope.dish = menuFactory.getDishes().get({
             id: parseInt($stateParams.id, 10)
         }).$promise.then(
@@ -132,7 +134,9 @@ angular.module('confusionApp')
     // implement the IndexController and About Controller here
     .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory) {
         $scope.showDish = false;
+        $scope.showPromotion = false;
         $scope.message = "Loading...";
+        
         $scope.creation = menuFactory.getDishes().get({
             id: 0
         }).$promise.then(
@@ -144,8 +148,21 @@ angular.module('confusionApp')
                 $scope.message = "Error: " + response.status + " " + response.statusText;
             }
         );
-        var monthsPromotion = menuFactory.getPromotion(0);
-        $scope.monthsPromotion = monthsPromotion;
+        
+        //var monthsPromotion = menuFactory.getPromotion(0);
+        $scope.monthsPromotion = menuFactory.getPromotion().get({
+            id: 0
+        }).$promise.then(
+            function(response) {
+                $scope.monthsPromotion = response;
+                $scope.showPromotion = true;
+            },
+            function(response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            }
+        );
+        
+        //$scope.monthsPromotion = monthsPromotion;
         var specialist = corporateFactory.getLeader(3);
         $scope.specialist = specialist;
     }])
