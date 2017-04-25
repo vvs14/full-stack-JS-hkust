@@ -132,9 +132,10 @@ angular.module('confusionApp')
     }])
 
     // implement the IndexController and About Controller here
-    .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory) {
+    .controller('IndexController', ['$scope', 'menuFactory','corporateFactory', function($scope, menuFactory, corporateFactory) {
         $scope.showDish = false;
         $scope.showPromotion = false;
+        $scope.showSpecialist = false;
         $scope.message = "Loading...";
         
         $scope.creation = menuFactory.getDishes().get({
@@ -161,15 +162,35 @@ angular.module('confusionApp')
                 $scope.message = "Error: " + response.status + " " + response.statusText;
             }
         );
-        
         //$scope.monthsPromotion = monthsPromotion;
-        var specialist = corporateFactory.getLeader(3);
-        $scope.specialist = specialist;
+        
+        $scope.specialist = corporateFactory.getLeaders().get({
+            id: 3
+        }).$promise.then(
+            function(response) {
+                $scope.specialist = response;
+                $scope.showSpecialist = true;
+            },
+            function(response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            }
+        );
+        //$scope.specialist = specialist;
     }])
 
     .controller('AboutController', ['$scope', 'corporateFactory', function($scope, corporateFactory) {
         //To make it accessible in aboutus.html
-        $scope.leaders = corporateFactory.getLeaders();
+        $scope.showLeaders = false;
+        $scope.message = "Loading...";
+        $scope.leaders = corporateFactory.getLeaders().query(
+            function(response) {
+                $scope.leaders = response;
+                $scope.showLeaders = true;
+            }, 
+            function(response){
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            }
+        );
     }])
 
 ;
