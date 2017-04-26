@@ -8,6 +8,7 @@ angular.module('confusionApp')
         $scope.showDetails = false;
         $scope.showMenu = false;
         $scope.message = "Loading...";
+        //https://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/
         $scope.dishes = menuFactory.getDishes().query(
             function(response) {
                 $scope.dishes = response; //with $http, it would have been response.data
@@ -62,16 +63,15 @@ angular.module('confusionApp')
 
     }])
 
-    .controller('FeedbackController', ['$scope', function($scope) {
+    .controller('FeedbackController', ['$scope', 'feedbackFactory', function($scope, feedbackFactory) {
 
         $scope.sendFeedback = function() {
-
             console.log($scope.feedback);
-
             if ($scope.feedback.agree && ($scope.feedback.mychannel == "")) {
                 $scope.invalidChannelSelection = true;
                 console.log('incorrect');
             } else {
+                feedbackFactory.getFeedback().save($scope.feedback);
                 $scope.invalidChannelSelection = false;
                 $scope.feedback = {
                     mychannel: "",
@@ -80,7 +80,7 @@ angular.module('confusionApp')
                     agree: false,
                     email: ""
                 };
-                $scope.feedback.mychannel = "";
+                //$scope.feedback.mychannel = "";
                 $scope.feedbackForm.$setPristine();
                 console.log($scope.feedback);
             }
@@ -90,6 +90,7 @@ angular.module('confusionApp')
     .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
         $scope.showDish = false;
         $scope.message = "Loading...";
+        //https://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/
         $scope.dish = menuFactory.getDishes().get({
             id: parseInt($stateParams.id, 10)
         }).$promise.then(
@@ -130,9 +131,12 @@ angular.module('confusionApp')
     }])
 
     // implement the IndexController and About Controller here
-    .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory) {
+    .controller('IndexController', ['$scope', 'menuFactory','corporateFactory', function($scope, menuFactory, corporateFactory) {
         $scope.showDish = false;
+        $scope.showPromotion = false;
+        $scope.showSpecialist = false;
         $scope.message = "Loading...";
+        
         $scope.creation = menuFactory.getDishes().get({
             id: 0
         }).$promise.then(
@@ -144,15 +148,48 @@ angular.module('confusionApp')
                 $scope.message = "Error: " + response.status + " " + response.statusText;
             }
         );
-        var monthsPromotion = menuFactory.getPromotion(0);
-        $scope.monthsPromotion = monthsPromotion;
-        var specialist = corporateFactory.getLeader(3);
-        $scope.specialist = specialist;
+        
+        //var monthsPromotion = menuFactory.getPromotion(0);
+        $scope.monthsPromotion = menuFactory.getPromotion().get({
+            id: 0
+        }).$promise.then(
+            function(response) {
+                $scope.monthsPromotion = response;
+                $scope.showPromotion = true;
+            },
+            function(response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            }
+        );
+        //$scope.monthsPromotion = monthsPromotion;
+        
+        $scope.specialist = corporateFactory.getLeaders().get({
+            id: 3
+        }).$promise.then(
+            function(response) {
+                $scope.specialist = response;
+                $scope.showSpecialist = true;
+            },
+            function(response) {
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            }
+        );
+        //$scope.specialist = specialist;
     }])
 
     .controller('AboutController', ['$scope', 'corporateFactory', function($scope, corporateFactory) {
         //To make it accessible in aboutus.html
-        $scope.leaders = corporateFactory.getLeaders();
+        $scope.showLeaders = false;
+        $scope.message = "Loading...";
+        $scope.leaders = corporateFactory.getLeaders().query(
+            function(response) {
+                $scope.leaders = response;
+                $scope.showLeaders = true;
+            }, 
+            function(response){
+                $scope.message = "Error: " + response.status + " " + response.statusText;
+            }
+        );
     }])
 
 ;
