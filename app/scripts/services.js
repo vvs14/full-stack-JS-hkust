@@ -26,7 +26,7 @@ angular.module('confusionApp')
         // implement a function named getPromotion
         // that returns a selected promotion.
     }])
-    .factory('corporateFactory', ['$resource', 'baseUrl', function($resource, baseUrl) {
+    .factory('corporateFactory', ['$resource', 'baseUrl', function($resource, baseUrl){
 
         var corpfac = {};
         // Remember this is a factory not a service
@@ -38,5 +38,17 @@ angular.module('confusionApp')
             });
         };
         return corpfac;
+    }])
+    .factory('feedbackFactory', ['$resource', 'baseUrl', function($resource, baseUrl){
+        var feedbackFac = {};
+        // Remember this is a factory not a service
+        feedbackFac.getFeedback = function(){
+            return $resource(baseUrl + "feedback/:id", null, {
+                'save': {
+                    method: 'POST'
+                }
+            });
+        };
+        return feedbackFac;
     }])
 ;
